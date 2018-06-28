@@ -1,7 +1,7 @@
 {
   "name": "any-xhr",
-  "version": "1.0.0",
-  "description": "XHR methos and attributes hook.",
+  "version": "1.0.2",
+  "description": "Intercept all of XHR methods and attributes.",
   "main": "release/any-hook.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
