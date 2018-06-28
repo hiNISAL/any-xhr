@@ -1,5 +1,9 @@
 class AnyXHR {
-
+/**
+ * 构造函数
+ * @param {*} hooks 
+ * @param {*} execedHooks 
+ */
   constructor(hooks = {}, execedHooks = {}) {
     // 单例
     if (AnyXHR.instance) {
@@ -7,20 +11,12 @@ class AnyXHR {
     }
 
     this.XHR = window.XMLHttpRequest;
-    this.proxyXHR = null;
 
     this.hooks = hooks;
     this.execedHooks = execedHooks;
     this.init();
 
     AnyXHR.instance = this;
-  }
-
-  /**
-   * 获取实例
-   */
-  getInstance() {
-    return AnyXHR.instance;
   }
 
   /**
@@ -31,7 +27,6 @@ class AnyXHR {
 
     window.XMLHttpRequest = function() {
       this._xhr = new _this.XHR();
-      _this.proxyXHR = this;
 
       _this.overwrite(this);
     }
@@ -56,15 +51,15 @@ class AnyXHR {
    * 处理重写
    * @param {*} xhr 
    */
-  overwrite(xhr) {
-    for (let key in xhr._xhr) {
-
-      if (typeof xhr._xhr[key] === 'function') {
-        this.overwriteMethod(key);
+  overwrite(proxyXHR) {
+    for (let key in proxyXHR._xhr) {
+      
+      if (typeof proxyXHR._xhr[key] === 'function') {
+        this.overwriteMethod(key, proxyXHR);
         continue;
       }
 
-      this.overwriteAttributes(key);
+      this.overwriteAttributes(key, proxyXHR);
     }
   }
 
@@ -72,8 +67,7 @@ class AnyXHR {
    * 重写方法
    * @param {*} key 
    */
-  overwriteMethod(key) {
-    let proxyXHR = this.proxyXHR;
+  overwriteMethod(key, proxyXHR) {
     let hooks = this.hooks;
     let execedHooks = this.execedHooks;
 
@@ -97,18 +91,16 @@ class AnyXHR {
    * 重写属性
    * @param {*} key 
    */
-  overwriteAttributes(key) {
-    let proxyXHR = this.proxyXHR;
-
-    Object.defineProperty(proxyXHR, key, this.setProperyDescriptor(key));
+  overwriteAttributes(key, proxyXHR) {
+    Object.defineProperty(proxyXHR, key, this.setProperyDescriptor(key, proxyXHR));
   }
 
   /**
-   * 生成属性描述 设置代理属性的set和get方法
+   * 设置属性的属性描述
+   * @param {*} key 
    */
-  setProperyDescriptor(key) {
+  setProperyDescriptor(key, proxyXHR) {
     let obj = Object.create(null);
-    let proxyXHR = this.proxyXHR;
     let _this = this;
 
     obj.set = function(val) {
@@ -132,7 +124,6 @@ class AnyXHR {
     }
 
     obj.get = function() {
-      console.log(key);
       return proxyXHR['__' + key] || this._xhr[key];
     }
 
@@ -140,11 +131,19 @@ class AnyXHR {
   }
 
   /**
+   * 获取实例
+   */
+  getInstance() {
+    return AnyXHR.instance;
+  }
+
+  /**
    * 删除钩子
    * @param {*} name 
    */
   rmHook(name, isExeced = false) {
-    delete (isExeced ? this.execedHooks[name] : this.hooks[name]);
+    let target = (isExeced ? this.execedHooks : this.hooks);
+    delete target[name];
   }
 
   /**
@@ -152,6 +151,22 @@ class AnyXHR {
    */
   clearHook() {
     this.hooks = {};
+    this.execedHooks = {};
+  }
+
+  /**
+   * 取消监听
+   */
+  unset() {
+    window.XMLHttpRequest = this.XHR;
+  }
+
+  /**
+   * 重新监听
+   */
+  reset() {
+    AnyXHR.instance = null;
+    AnyXHR.instance = new AnyXHR(this.hooks, this.execedHooks);
   }
 }
 

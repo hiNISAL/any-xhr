@@ -10,28 +10,55 @@
 
 <body>
   <script src="./release/any-xhr.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
   <script>
     let n = new AnyXHR();
 
-    n.add('onreadystatechange', function() {
-      this.responseText = 1;
+    // n.add('onload', function() {
+    //   // console.log(this.responseText);
+    //   // console.log(this);
+    //   console.log(this);
+    // });
+
+    // n.add('send', function() {
+    //   console.log('before send');
+    // }).add('send', function() {
+    //   console.log('after send');
+    //   // console.log(this);
+    // }, true);
+
+    n.add('open', function () {
+        console.log(this)
+      })
+      .add('open', function () {
+        console.log(222)
+      }, true);
+
+    // n.rmHook('open');
+
+    n.unset();
+    n.reset();
+
+    $.get('http://fe0.host.micoya.com/admin/carousel', {
+      b: 2,
+      c: 3
+    }).done(function (...args) {
+      // console.log(args);
+      console.log(1);
+      // alert(1);
     });
 
-    n.add('send', function() {
-      console.log('before send');
-    });
+    // let xhr = new XMLHttpRequest();
+    // console.log(xhr);
+    // xhr.open('GET', '/abc?a=1&b=2', true);
 
-    let xhr = new XMLHttpRequest();
-    console.log(xhr);
-    xhr.open('GET', '/abc?a=1&b=2', true);
+    // xhr.send();
 
-    xhr.send();
-
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        console.log(this.responseText)
-      }
-    }
+    // xhr.onreadystatechange = function () {
+    //   if (xhr.readyState == 4 && xhr.status == 200) {
+    //     // console.log(this.responseText)
+    //   }
+    // }
   </script>
 </body>
 
