@@ -35,16 +35,16 @@ if (isDev) {
   );
   
 } else {
+  config.plugins.push(
+    babel()
+  )
+
   if (minify === 'true') {
     config.output.file = 'release/any-xhr.min.js';
     config.plugins.push(uglify.uglify());
   } else {
     config.output.file = 'release/any-xhr.js';
   }
-
-  config.plugins.push(
-    babel()
-  )
 }
 
 export default config;

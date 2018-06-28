@@ -1,19 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
 </head>
+
 <body>
   <script src="./release/any-xhr.js"></script>
   <script>
-    var xhr = new XMLHttpRequest();
+    let n = new AnyXHR();
 
+    n.add('onreadystatechange', function() {
+      this.responseText = 1;
+    });
+
+    n.add('send', function() {
+      console.log('before send');
+    });
+
+    let xhr = new XMLHttpRequest();
+    console.log(xhr);
     xhr.open('GET', '/abc?a=1&b=2', true);
 
     xhr.send();
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        console.log(this.responseText)
+      }
+    }
   </script>
 </body>
+
 </html>
