@@ -46,34 +46,37 @@ const AnyXHR from 'any-xhr';
 
 ## methods
 
-- add
-  - Dynamically add hooks
-  - 动态添加钩子
+### add
 
-  - arguments
-    - `key` 
-      - xhr methods or attributes (xhr实例的方法或者属性名)
-    - `value`
-    - `execed`
-      - call after the native xhr methods
-      - default: false
+Dynamically add hooks
+动态添加钩子
 
-- rmHook
-  - Dynamically remove hooks
-  - 动态删除钩子
+- arguments 参数
+  - `key` xhr methods or attributes (xhr实例的方法或者属性名)
+  - `value`
+  - `execed`
+    - call after the native xhr methods (是否在原生方法后调用)
+    - default: false
 
-  - arguments
-    - `key`
-      -  xhr methods or attributes (xhr实例的方法或者属性名)
+### rmHook
 
-- clearHook
-  - clear all of hooks
-  - 清空所有钩子
+Dynamically remove hooks
+动态删除钩子
 
-- unset
-  - close all of proxy
-  - 还原
+- arguments 参数
+  - `key` xhr methods or attributes (xhr实例的方法或者属性名)
 
-- reset
-  - open all of proxy
-  - 重新开启监听 代理
+### clearHook
+
+clear all of hooks
+清空所有钩子
+
+### unset
+
+close all of proxy
+还原
+
+### reset
+
+open all of proxy
+重新开启监听 代理
