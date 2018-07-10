@@ -1,14 +1,15 @@
 {
   "name": "any-xhr",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "Intercept all of XHR methods and attributes.",
-  "main": "release/any-hook.min.js",
+  "main": "release/any-xhr.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:minify": "cross-env NODE_ENV=production MINIFY=true rollup -c",
     "build:std": "cross-env NODE_ENV=production MINIFY=false rollup -c",
+    "build:esm": "cross-env NODE_ENV=production MINIFY=false rollup -c rollup.config.esm.js",
     "dev": "cross-env NODE_ENV=development MINIFY=false rollup -c -w",
-    "build": "npm run build:minify && npm run build:std",
+    "build": "npm run build:minify && npm run build:std && npm run build:esm",
     "start": "npm run dev"
   },
   "repository": {

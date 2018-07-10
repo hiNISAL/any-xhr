@@ -24,7 +24,7 @@ anyxhr.add('open', function(...args) {
 anyxhr.rmhook('open');
 
 // ES Module
-import AnyXHR from 'any-xhr';
+import AnyXHR from 'any-xhr/release/any-xhr.esm.js';
 
 // commonjs
 const AnyXHR from 'any-xhr';
