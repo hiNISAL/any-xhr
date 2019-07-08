@@ -30,53 +30,44 @@ import AnyXHR from 'any-xhr/release/any-xhr.esm.js';
 const AnyXHR from 'any-xhr';
 ```
 
-## constructor
+## constructor 构造函数
 
 > constructor(hooks = {}, execedHooks = {})
 
-`hooks` 
+`hooks` 在原生的xhr方法调用之前调用
 
-  - It will call before the native xhr methods
-  - 在原生的xhr方法调用之前调用
-
-`execedHooks`
-
-  - It will call after the native xhr methods
-  - 在原生的xhr方法调用之后调用
+`execedHooks` 在原生的xhr方法调用之后调用
 
 ## methods
 
 ### add
 
-Dynamically add hooks
 动态添加钩子
 
-- arguments 参数
-  - `key` xhr methods or attributes (xhr实例的方法或者属性名)
-  - `value`
-  - `execed`
-    - call after the native xhr methods (是否在原生方法后调用)
-    - default: false
+* 参数
+
+`key` xhr实例的方法或者属性名
+
+`value`
+
+`execed` 是否在原生方法后调用 (default: false)
 
 ### rmHook
 
-Dynamically remove hooks
 动态删除钩子
 
-- arguments 参数
-  - `key` xhr methods or attributes (xhr实例的方法或者属性名)
+* 参数
+
+`key` xhr实例的方法或者属性名
 
 ### clearHook
 
-clear all of hooks
 清空所有钩子
 
 ### unset
 
-close all of proxy
 还原
 
 ### reset
 
-open all of proxy
 重新开启监听 代理
