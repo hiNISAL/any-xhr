@@ -66,7 +66,7 @@ const AnyXHR from 'any-xhr';
 
 ### unset
 
-还原
+还原
 
 ### reset
 
